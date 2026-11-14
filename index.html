@@ -955,7 +955,7 @@ function fmtQ(s){const L=String(s).split(NLc),rows=L.map(l=>{if(l.includes(TABc)
   let out="",i=0;while(i<L.length){if(rows[i]){let j=i;while(j<L.length&&rows[j])j++;const tabbed=L.slice(i,j).some(l=>l.includes(TABc));
       if(j-i>=2||tabbed){out+='<table class="qtab">'+rows.slice(i,j).map(r=>'<tr>'+r.map((c,k)=>'<td'+(k&&k===r.length-1?' class="n"':'')+'>'+esc(c.trim())+'</td>').join('')+'</tr>').join('')+'</table>';i=j;continue}}
     out+='<span class="ql">'+esc(L[i])+'</span>';i++}return out}
-const fmtX=s=>esc(s).replace(new RegExp('(^|'+NLc+')(The idea:|Solving it:|Why not the others:|Remember:)','g'),(m,a,b)=>a+'<span class="xp-b">'+b+'</span>');
+const fmtX=s=>esc(s).replace(new RegExp('(^|'+NLc+')(The idea:|Solving it:|Why not the others:|Remember:)','g'),(m,a,b)=>a+'<span class="xp-b">'+b+'</span>').replace(/([^\n]) (Step [0-9]+:)/g,'$1'+NLc+'$2');
 // every answer is written as choice A; shuffle the choices the same way on every device (lists with "of the above" keep their order)
 QB.forEach(q=>{ if(q.o.some(o=>/of the above|of these|none of|all of|both of/i.test(o))) return;
   let s=[...q.id].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7); const idx=q.o.map((_,i)=>i);
@@ -1433,4 +1433,4 @@ document.addEventListener("keydown",e=>{
 showWho(); render(); initDb();
 </script>
 
-</body></html>
+<div id="upd" style="display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:50;max-width:560px;margin:0 auto;padding:12px 14px;border-radius:12px;background:#111;color:#fff;font:600 15px/1.4 system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.3)">This drill was just updated. <button onclick="location.reload()" style="margin-left:8px;font:700 14px system-ui;padding:8px 12px;border-radius:8px;border:0;background:#fff;color:#111;cursor:pointer">Reload</button> <span style="font-weight:400;opacity:.8">Your progress is saved.</span></div><script>(function(){const B="7a49d6351d1a";let shown=false;async function c(){if(shown)return;try{const t=await (await fetch(location.pathname+"?v="+Date.now(),{cache:"no-store"})).text();const m=t.match(/const B="([0-9a-f]+)"/);if(m&&m[1]!==B){shown=true;document.getElementById("upd").style.display="block"}}catch(e){}}setInterval(c,180000);document.addEventListener("visibilitychange",()=>{if(!document.hidden)c()})})();</script></body></html>
